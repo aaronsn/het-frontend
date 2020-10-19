@@ -1,65 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DatasetFilter from "./DatasetFilter";
-import DataFetcher from "../../utils/DataFetcher";
 import DataTable from "./DataTable";
 import DatasetListing from "./DatasetListing";
 import styles from "./DatasetExplorer.module.scss";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { DatasetMetadata } from "../../utils/DatasetMetadata";
-
-type LoadStatus = "unloaded" | "loading" | "loaded";
+import DatasetStore, { Dataset } from "../../utils/DatasetStore";
+import { observer } from "mobx-react-lite";
 
 function renderTableOrPlaceholder(
-  loadStatus: LoadStatus,
-  columns: any[],
-  data: any[]
+  datasetStore: DatasetStore,
+  datasetId: string
 ) {
+  const loadStatus = datasetStore.getDatasetLoadStatus(datasetId);
   switch (loadStatus) {
     case "loaded":
-      return <DataTable columns={columns} data={data} />;
+      const dataset = datasetStore.datasets.get(datasetId) as Dataset;
+      return (
+        <DataTable
+          columns={dataset.getTableViewColumns()}
+          data={dataset.rows}
+        />
+      );
     case "loading":
       return <p>Loading...</p>;
-    default:
+    case "unloaded":
       return <p>Select a data source to view.</p>;
+    default:
+      return <p>Oops, something went wrong.</p>;
   }
 }
 
-function DatasetExplorer() {
-  const [loadStatus, setLoadStatus] = useState<LoadStatus>("unloaded");
+function DatasetExplorer({ datasetStore }: { datasetStore: DatasetStore }) {
   const [previewedSourceId, setPreviewedSourceId] = useState("");
-  const [data, setData] = useState([]);
-  const [datasets, setDatasets] = useState<Record<string, DatasetMetadata>>({});
-  const [columns, setColumns] = useState([]);
   const [activeFilter, setActiveFilter] = useState<Array<string>>([]);
 
-  /* This is called whenever the component is rendered */
-  useEffect(() => {
-    async function updateDatasets() {
-      const fetcher = new DataFetcher();
-      const datasets = await fetcher.getMetadata();
-      setDatasets(Object.assign(datasets));
-    }
-    /* Only need to fetch datasets if they have not yet been fetched */
-    if (Object.keys(datasets).length === 0) {
-      updateDatasets();
-    }
-    // ignore warning about datasets.length dependency
-    // eslint-disable-next-line
-  }, []);
-
-  const loadPreview = async (sourceId: string) => {
-    setLoadStatus("loading");
+  const loadPreview = (sourceId: string) => {
     setPreviewedSourceId(sourceId);
-    const fetcher = new DataFetcher();
-    const source = await fetcher.loadDataset(sourceId);
-    setData(source.data);
-    setColumns(source.columns);
-    setLoadStatus("loaded");
+    datasetStore.loadDataset(sourceId);
   };
 
   function filterSources(filtered: Array<string>) {
     setActiveFilter(filtered);
   }
+
+  const datasets = datasetStore.metadata;
 
   return (
     <div className={styles.DatasetExplorer}>
@@ -88,10 +72,10 @@ function DatasetExplorer() {
           ))}
       </div>
       <div className={styles.Table}>
-        {renderTableOrPlaceholder(loadStatus, columns, data)}
+        {renderTableOrPlaceholder(datasetStore, previewedSourceId)}
       </div>
     </div>
   );
 }
 
-export default DatasetExplorer;
+export default observer(DatasetExplorer);

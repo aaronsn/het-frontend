@@ -8,6 +8,10 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import DatasetStore from "./utils/DatasetStore";
+
+const datasetStore = new DatasetStore();
+datasetStore.loadMetadata();
 
 function App() {
   return (
@@ -29,7 +33,9 @@ function App() {
             </Toolbar>
           </AppBar>
           <Switch>
-            <Route path="/datacatalog" component={DataCatalogPage} />
+            <Route path="/datacatalog">
+              <DataCatalogPage datasetStore={datasetStore} />
+            </Route>
             <Route path="/exploredata" component={ExploreDataPage} />
             <Route path="/" component={LandingPage} />
           </Switch>

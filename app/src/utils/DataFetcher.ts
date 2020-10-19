@@ -44,6 +44,11 @@ class DataFetcher {
   }
 
   async loadDataset(datasetId: string) {
+    if (datasetId === "state_names") {
+      await new Promise((res) => {
+        setTimeout(res, 5000);
+      });
+    }
     const url = this.getUrl(datasetId);
     const data = await this.loadData(url);
     return this.convertJson(data);
