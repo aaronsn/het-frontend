@@ -5,6 +5,7 @@ import { DatasetMetadata } from "../../utils/DatasetTypes";
 const changeActions: Array<ActionTypes> = [
   "select-option",
   "remove-value",
+  "pop-value",
   "clear",
 ];
 
@@ -20,6 +21,79 @@ function propertyToSelectOption(property: string): SelectOption {
   };
 }
 
+function getPropertyToDatasetsMap(
+  datasets: Record<string, DatasetMetadata>,
+  propertySelector: (metadata: DatasetMetadata) => string
+): Record<string, string[]> {
+  const propertyToDatasetsMap: Record<string, string[]> = {};
+  Object.keys(datasets).forEach((dataset_id) => {
+    const property = propertySelector(datasets[dataset_id]);
+    if (!propertyToDatasetsMap[property]) {
+      propertyToDatasetsMap[property] = [];
+    }
+    propertyToDatasetsMap[property].push(dataset_id);
+  });
+  return propertyToDatasetsMap;
+}
+
+function updateFilters(
+  propertyToDatasetsMap: Record<string, string[]>,
+  onSelectionChange: (filtered: Array<string>) => void,
+  selected: SelectOption[],
+  action: ActionTypes
+) {
+  if (changeActions.includes(action)) {
+    const filter =
+      !selected || selected.length === 0
+        ? []
+        : selected.map((item) => propertyToDatasetsMap[item.value]).flat();
+    onSelectionChange(filter);
+  }
+}
+
+/**
+ * @param props
+ *     datasets: The metadata for all datasets
+ *     onSelectionChange: function that gets called when the filter's selection
+ *         changes. Gets passed a list of all datasets that this filter is
+ *         including, or an empty array if this filter is not being used.
+ *     propertySelector: function returns the metadata property to filter on.
+ *     allOption: The value for selecting "all" values.
+ */
+export function SingleSelectDatasetFilter(props: {
+  datasets: Record<string, DatasetMetadata>;
+  onSelectionChange: (filtered: Array<string>) => void;
+  propertySelector: (metadata: DatasetMetadata) => string;
+  allOption: string;
+}) {
+  const propertyToDatasetsMap = getPropertyToDatasetsMap(
+    props.datasets,
+    props.propertySelector
+  );
+  const options = [props.allOption]
+    .concat(Object.keys(propertyToDatasetsMap))
+    .map(propertyToSelectOption);
+  const allOptionValue = propertyToSelectOption(props.allOption);
+  return (
+    <Select
+      options={options}
+      isSearchable={false}
+      onChange={(value, metadata) => {
+        const selected = value as SelectOption;
+        const selectedOrAll: SelectOption[] =
+          selected.value === props.allOption ? options : [selected];
+        updateFilters(
+          propertyToDatasetsMap,
+          props.onSelectionChange,
+          selectedOrAll,
+          metadata.action
+        );
+      }}
+      defaultValue={allOptionValue}
+    />
+  );
+}
+
 /**
  * @param props
  *     datasets: The metadata for all datasets
@@ -31,21 +105,17 @@ function propertyToSelectOption(property: string): SelectOption {
  *     defaultValues: The default display options, or null for no default
  *         values. Must be valid options or the filter won't work properly.
  */
-function DatasetFilter(props: {
+export function MultiSelectDatasetFilter(props: {
   datasets: Record<string, DatasetMetadata>;
   onSelectionChange: (filtered: Array<string>) => void;
   propertySelector: (metadata: DatasetMetadata) => string;
   placeholder: string;
   defaultValues: string[] | null;
 }) {
-  const propertyToDatasetsMap: Record<string, string[]> = {};
-  Object.keys(props.datasets).forEach((dataset_id) => {
-    const property = props.propertySelector(props.datasets[dataset_id]);
-    if (!propertyToDatasetsMap[property]) {
-      propertyToDatasetsMap[property] = [];
-    }
-    propertyToDatasetsMap[property].push(dataset_id);
-  });
+  const propertyToDatasetsMap = getPropertyToDatasetsMap(
+    props.datasets,
+    props.propertySelector
+  );
   const options = Object.keys(propertyToDatasetsMap).map(
     propertyToSelectOption
   );
@@ -58,20 +128,14 @@ function DatasetFilter(props: {
       placeholder={props.placeholder}
       isMulti
       onChange={(value, metadata) => {
-        const selected = value as SelectOption[];
-        if (changeActions.includes(metadata.action)) {
-          const filter =
-            !selected || selected.length === 0
-              ? []
-              : selected
-                  .map((item) => propertyToDatasetsMap[item.value])
-                  .flat();
-          props.onSelectionChange(filter);
-        }
+        updateFilters(
+          propertyToDatasetsMap,
+          props.onSelectionChange,
+          value as SelectOption[],
+          metadata.action
+        );
       }}
       defaultValue={defaultValues}
     />
   );
 }
-
-export default DatasetFilter;
