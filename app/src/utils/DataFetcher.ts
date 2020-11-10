@@ -5,6 +5,14 @@
 import { MetadataMap, Row } from "./DatasetTypes";
 import FakeMetadataMap from "./FakeMetadataMap";
 
+const fakeStateData = [
+  ["State", "score"],
+  ["Alabama", 55],
+  ["California", 81],
+  ["Georgie", 32],
+  ["Washington", 29],
+];
+
 class DataFetcher {
   private async loadData(url: string): Promise<Response> {
     const r = await fetch(url);
@@ -42,7 +50,13 @@ class DataFetcher {
 
   async loadDataset(datasetId: string): Promise<Row[]> {
     // TODO: Overriding the datasetID for now since the datasets aren't actually hooked up
-    datasetId = "state_names";
+    // datasetId = "state_names";
+    if (datasetId === "fake_state_data") {
+      await new Promise((res) => {
+        setTimeout(res, 1000);
+      });
+      return this.convertJson(fakeStateData);
+    }
     const url = this.getUrl(datasetId);
     const data = await this.loadData(url);
     return this.convertJson(data);
