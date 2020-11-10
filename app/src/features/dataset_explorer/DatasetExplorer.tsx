@@ -112,12 +112,6 @@ function DatasetExplorer(props: { preFilterDatasetIds: string[] }) {
             </div>
             <div className={styles.FilterContainer}>
               <div className={styles.FilterTitle}>Filter by...</div>
-              {/* {createFilter(
-                NAME_FILTER_ID,
-                "Dataset name",
-                (metadata) => metadata.name,
-                defaultDatasetNames
-              )} */}
               {createFilter(
                 "geographic_filter",
                 (metadata) => metadata.geographic_level,
