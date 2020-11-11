@@ -37,6 +37,39 @@ export class Dataset {
       return this.metadata.fields.map((field) => row[field.name]);
     });
   }
+
+  sortBy(fn: (el1: Row, el2: Row) => number) {
+    const newRows = this.rows.slice();
+    newRows.sort(fn);
+    return new Dataset(newRows, this.metadata);
+  }
+
+  addCol(name: string, fn: (row: Row) => any) {
+    const newRows = this.rows
+      .slice()
+      .map((row) => ({ ...row, [name]: fn(row) }));
+    // TODO metadata is wrong now.
+    return new Dataset(newRows, this.metadata);
+  }
+
+  colsToRows(cols: string[], newColName: string, groupedByName: string): Row[] {
+    const newData: Row[] = [];
+    this.rows.forEach((row) => {
+      const newRow = { ...row };
+      const vals: Record<string, any> = {};
+      cols.forEach((col) => {
+        vals[col] = newRow[col];
+        delete newRow[col];
+      });
+      Object.keys(vals).forEach((col) => {
+        const copyRow = { ...newRow };
+        copyRow[groupedByName] = col;
+        copyRow[newColName] = vals[col];
+        newData.push(copyRow);
+      });
+    });
+    return newData;
+  }
 }
 
 // Map of dataset id to DatasetMetadata
