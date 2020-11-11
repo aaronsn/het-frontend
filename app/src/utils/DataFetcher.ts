@@ -5,16 +5,18 @@
 import { MetadataMap, Row } from "./DatasetTypes";
 import FakeMetadataMap from "./FakeMetadataMap";
 
-const fakeStateData = [
-  ["State", "score"],
-  ["Alabama", 55],
-  ["California", 81],
-  ["Georgie", 32],
-  ["Washington", 29],
-];
+function generateFakeStateData(baseData: any[][], fieldsToAdd: string[]) {
+  const newData: any[][] = [baseData[0].concat(fieldsToAdd)];
+  const rows = baseData.slice(1).map((row) => {
+    return row.concat(
+      fieldsToAdd.map((field) => Math.round(Math.random() * 100))
+    );
+  });
+  return newData.concat(rows);
+}
 
 class DataFetcher {
-  private async loadData(url: string): Promise<Response> {
+  private async loadData(url: string): Promise<any[][]> {
     const r = await fetch(url);
     return await r.json();
   }
@@ -55,7 +57,14 @@ class DataFetcher {
       await new Promise((res) => {
         setTimeout(res, 1000);
       });
-      return this.convertJson(fakeStateData);
+      const url = this.getUrl("state_names");
+      const data = await this.loadData(url);
+      const fakeData = generateFakeStateData(data, [
+        "black_covid_rate",
+        "white_covid_rate",
+      ]);
+      const convertedData = this.convertJson(fakeData);
+      return convertedData;
     }
     const url = this.getUrl(datasetId);
     const data = await this.loadData(url);
