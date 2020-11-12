@@ -62,6 +62,7 @@ class DataFetcher {
       const fakeData = generateFakeStateData(data, [
         "black_covid_rate",
         "white_covid_rate",
+        "hispanic_covid_rate",
       ]);
       const convertedData = this.convertJson(fakeData);
       return convertedData;

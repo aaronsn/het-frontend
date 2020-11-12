@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Vega, VisualizationSpec } from "react-vega";
 import { Dataset, Row } from "../utils/DatasetTypes";
 import useDatasetStore from "../utils/useDatasetStore";
+import WithDataset from "./WithDataset";
 
 const COLOR_RANGE = ["#675193", "#ca8861"];
 
@@ -86,30 +87,9 @@ function getGroupedSpecNew(
   };
 }
 
-function WithDataset(props: {
-  datasetId: string;
-  children: (dataset: Dataset) => JSX.Element;
-}) {
-  const datasetStore = useDatasetStore();
-  useEffect(() => {
-    datasetStore.loadDataset(props.datasetId);
-  });
-  switch (datasetStore.getDatasetLoadStatus(props.datasetId)) {
-    case "loaded":
-      const dataset = datasetStore.datasets[props.datasetId];
-      return props.children(dataset);
-    case "loading":
-    case "unloaded":
-      return <p>Loading...</p>;
-    default:
-      return <p>Oops, something went wrong.</p>;
-  }
-}
-
 function BarChart() {
   return (
     <React.Fragment>
-      <p>THESE ARE RANDOM NUMBERS</p>
       <WithDataset datasetId={"fake_state_data"}>
         {(dataset) => {
           const newDataset = dataset
