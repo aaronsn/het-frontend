@@ -1,3 +1,5 @@
+import { DataFrame, IDataFrame } from "data-forge";
+
 /* TODO: These are not yet comprehensive, final interfaces */
 
 export interface DatasetMetadata {
@@ -30,6 +32,10 @@ export class Dataset {
   constructor(rows: Row[], metadata: DatasetMetadata) {
     this.rows = rows;
     this.metadata = metadata;
+  }
+
+  asDataFrame() {
+    return new DataFrame(this.rows);
   }
 
   getRowsAsArrays() {

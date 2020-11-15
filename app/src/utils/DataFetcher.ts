@@ -3,49 +3,104 @@
 // establish the API types.
 
 import { MetadataMap, Row } from "./DatasetTypes";
+import { diabetes } from "./FakeData";
 import FakeMetadataMap from "./FakeMetadataMap";
+import { DataFrame, IDataFrame } from "data-forge";
+
+const colMap = {
+  DP05_0070E: "All Races",
+  DP05_0071E: "Hispanic",
+  DP05_0077E: "White, Non-Hispanic",
+  DP05_0078E: "Black, Non-Hispanic",
+  DP05_0080E: "Asian, Non-Hispanic",
+  DP05_0079E: "American Indian/Alaskan Native, Non-Hispanic",
+};
+
+const colsToMerge = [
+  "DP05_0081E", // Native Hawaiian and Other Pacific Islander alone, Non-Hispanic
+  "DP05_0082E", // Some other race alone, Non-Hispanic
+  "DP05_0083E", // Two or more races, Non-Hispanic
+];
+
+async function getAcsStatePopulations() {
+  const populationCols = colsToMerge.concat(Object.keys(colMap));
+  const params = ["NAME"].concat(populationCols).join(",");
+  let r = await fetch(
+    `https://api.census.gov/data/2018/acs/acs5/profile?get=${params}&for=state:*`
+  );
+  let json = await r.json();
+  let df = new DataFrame({ columnNames: json[0], rows: json.slice(1) })
+    .parseInts(populationCols)
+    .generateSeries({
+      "Other race, Non-Hispanic": (row) =>
+        colsToMerge.map((c) => row[c]).reduce((acc, v) => acc + v),
+    })
+    .dropSeries(colsToMerge)
+    .renameSeries(colMap)
+    .renameSeries({ state: "state_fips_code" })
+    .renameSeries({ NAME: "state_name" });
+  const renamedPopCols = ["Other race, Non-Hispanic"].concat(
+    Object.values(colMap)
+  );
+  return colsToRows(df, renamedPopCols, "population", "race");
+}
+
+function colsToRows(
+  df: IDataFrame,
+  cols: string[],
+  newColName: string,
+  groupedByName: string
+) {
+  return df
+    .selectMany((row) => {
+      return cols.map((col) => {
+        return { ...row, [groupedByName]: col, [newColName]: row[col] };
+      });
+    })
+    .dropSeries(cols);
+}
+
+// const groupFn = (group: any) => {
+//   const obj = group
+//     .transformSeries({ race: (value: any) => 'diabetes_' + value })
+//     .aggregate({}, (acc: any, row: any) => {
+//       acc[row.race] = row.diabetes_count;
+//       return acc;
+//     });
+//   return { state_name: group.first().state_name, ...obj };
+// }
+
+function getDiabetesFrame() {
+  return new DataFrame(diabetes)
+    .dropSeries([
+      "DIABETES_NO_REFUSED",
+      "PREDIABETES_YES_YESPREGNANT",
+      "PREDIABETES_NO_UNSURE_REFUSED",
+      "COPD_YES",
+      "COPD_NO_UNKNOWN_REFUSED",
+    ])
+    .renameSeries({
+      BRFSS2019_STATE: "state_name",
+      BRFSS2019_IMPLIED_RACE: "race",
+      DIABETES_YES_YESPREGNANT: "diabetes_count",
+    });
+  // .groupBy((row: any) => row.state_name)
+  // .select(groupFn)
+  // .inflate();
+}
 
 class DataFetcher {
-  private async loadData(url: string): Promise<Response> {
-    const r = await fetch(url);
-    return await r.json();
-  }
-
-  private getUrl(datasetId: string): string {
-    if (datasetId === "state_names") {
-      return "https://api.census.gov/data/2010/dec/sf1?get=NAME&for=state:*";
-    } else if (datasetId === "county_names") {
-      return "https://api.census.gov/data/2010/dec/sf1?get=NAME&for=county:*&in=state:*";
-    } else if (datasetId === "pop_by_race") {
-      return (
-        "https://api.census.gov/data/2018/acs/acs5/profile" +
-        "?get=NAME,DP05_0070E,DP05_0071E,DP05_0077E,DP05_0078E,DP05_0080E" +
-        "&for=county:*&in=state:*"
-      );
-    }
-    throw new Error("Unknown dataset");
-  }
-
-  private convertJson(data: any): Row[] {
-    let realData = data;
-    const headers = realData[0];
-    realData = realData.slice(1);
-    realData = realData.map((row: Array<any>) => {
-      const newRow: { [key: string]: any } = {};
-      for (let i = 0; i < headers.length; i++) {
-        newRow[headers[i]] = row[i];
-      }
-      return newRow;
-    });
-    return realData;
-  }
-
   async loadDataset(datasetId: string): Promise<Row[]> {
-    // TODO: Overriding the datasetID for now since the datasets aren't actually hooked up
-    datasetId = "state_names";
-    const url = this.getUrl(datasetId);
-    const data = await this.loadData(url);
-    return this.convertJson(data);
+    // TODO load from data server once it's ready
+    switch (datasetId) {
+      case "brfss_diabetes":
+        return getDiabetesFrame().toArray();
+      case "acs_state_population_by_race":
+        const acsData = await getAcsStatePopulations();
+        return acsData.toArray();
+      default:
+        throw new Error("Unknown dataset");
+    }
   }
 
   async getMetadata(): Promise<MetadataMap> {
