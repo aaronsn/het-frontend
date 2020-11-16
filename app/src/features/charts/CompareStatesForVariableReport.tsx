@@ -3,11 +3,30 @@ import WithDatasets from "../../utils/WithDatasets";
 import { LinkWithStickyParams } from "../../utils/urlutils";
 import GroupedBarChart from "../../features/charts/GroupedBarChart";
 import { Dataset, Row } from "../../utils/DatasetTypes";
+import StackedBarChart from "./StackedBarChart";
 
 interface CompareStatesForVariableProps {
   state1: string;
   state2: string;
   variable: string;
+}
+
+type GetChartData = (
+  datasets: Record<string, Dataset>,
+  state1: string,
+  state2: string
+) => Row[];
+
+interface SimpleChartConfig {
+  title: string;
+  measure: string;
+  getData: GetChartData;
+}
+
+interface VariableConfig {
+  datasetIds: string[];
+  groupedBarChart: SimpleChartConfig;
+  stackedPopulationBreakdownChart: SimpleChartConfig;
 }
 
 function getDiabetesBarChartData(
@@ -23,33 +42,75 @@ function getDiabetesBarChartData(
 
   const keySelector = (row: any) =>
     JSON.stringify({ state_name: row.state_name, race: row.race });
-  return brfss_diabetes
+  const joined = brfss_diabetes
     .toDataFrame()
-    .where((row) => [state1, state2].includes(row.state_name))
     .join(
       acs_state_population_by_race.toDataFrame(),
       keySelector,
       keySelector,
       (dia, acs) => ({ ...acs, ...dia })
-    )
-    .generateSeries({
-      diabetes_per_100k: (row) =>
-        Math.round(row.diabetes_count / (row.population / 100000)),
-    })
-    .toArray();
+    );
+  return (
+    joined
+      .concat(
+        joined.pivot("race", {
+          state_name: (series) => "United States",
+          diabetes_count: (series) => series.sum(),
+          population: (series) => series.sum(),
+        })
+      )
+      // After joining, reset index to prevent generated series from applying to
+      // the wrong rows.
+      .resetIndex()
+      .where((row) =>
+        [state1, state2, "United States"].includes(row.state_name)
+      )
+      .generateSeries({
+        diabetes_per_100k: (row) =>
+          Math.round(row.diabetes_count / (row.population / 100000)),
+      })
+      .toArray()
+  );
 }
 
-interface VariableConfig {
-  datasetIds: string[];
-  groupedBarChart: {
-    title: string;
-    measure: string;
-    getData: (
-      datasets: Record<string, Dataset>,
-      state1: string,
-      state2: string
-    ) => Row[];
-  };
+function getStackedPopulationBreakdownChart(
+  datasets: Record<string, Dataset>,
+  state1: string,
+  state2: string
+) {
+  const acs_state_population_by_race = datasets["acs_state_population_by_race"];
+  if (!acs_state_population_by_race) {
+    throw new Error("Datasets not loaded properly");
+  }
+
+  const df = acs_state_population_by_race.toDataFrame();
+  const withUs = df
+    .concat(
+      df.pivot("race", {
+        state_name: (series) => "United States",
+        population: (series) => series.sum(),
+      })
+    )
+    .where((row) => [state1, state2, "United States"].includes(row.state_name));
+  const res = withUs
+    .groupBy((row) => row.state_name)
+    .select((group) => {
+      const statePop = group.where((r) => r.race === "All Races").first()
+        .population;
+      return group
+        .where((row) => row.race !== "All Races")
+        .transformSeries({
+          population: (pop) => Math.round((1000 * pop) / statePop) / 10,
+        });
+    });
+  return res
+    .skip(1)
+    .aggregate(res.first(), (prevValue, nextValue) =>
+      prevValue.concat(nextValue)
+    )
+    .resetIndex()
+    .renameSeries({ population: "population_pct" })
+    .toArray();
 }
 
 const variableConfigs: Record<string, VariableConfig> = {
@@ -60,11 +121,20 @@ const variableConfigs: Record<string, VariableConfig> = {
       measure: "diabetes_per_100k",
       getData: getDiabetesBarChartData,
     },
+    stackedPopulationBreakdownChart: {
+      title: "Population breakdown by race",
+      measure: "population_pct",
+      getData: getStackedPopulationBreakdownChart,
+    },
   },
 };
 
 function CompareStatesForVariableReport(props: CompareStatesForVariableProps) {
-  const { datasetIds, groupedBarChart } = variableConfigs[props.variable];
+  const {
+    datasetIds,
+    groupedBarChart,
+    stackedPopulationBreakdownChart,
+  } = variableConfigs[props.variable];
   return (
     <WithDatasets datasetIds={datasetIds}>
       {(datasets) => {
@@ -78,6 +148,15 @@ function CompareStatesForVariableReport(props: CompareStatesForVariableProps) {
                 props.state2
               )}
               measure={groupedBarChart.measure}
+            />
+            <p>{stackedPopulationBreakdownChart.title}</p>
+            <StackedBarChart
+              data={stackedPopulationBreakdownChart.getData(
+                datasets,
+                props.state1,
+                props.state2
+              )}
+              measure={stackedPopulationBreakdownChart.measure}
             />
             <LinkWithStickyParams
               to={`/datacatalog?dpf=${Object.keys(datasets).join(",")}`}

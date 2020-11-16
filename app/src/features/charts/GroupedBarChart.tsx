@@ -2,6 +2,46 @@ import React from "react";
 import { Vega, VisualizationSpec } from "react-vega";
 import { Row } from "../../utils/DatasetTypes";
 
+function getVegaLiteSpec(
+  data: Record<string, any>[],
+  dim1: string,
+  dim2: string,
+  measure: string
+): VisualizationSpec {
+  return {
+    $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+    data: { values: data },
+    width: { step: 12 },
+    mark: "bar",
+    encoding: {
+      column: {
+        field: dim1,
+        type: "ordinal",
+        spacing: 10,
+      },
+      y: {
+        aggregate: "sum",
+        field: measure,
+        title: "population",
+        axis: { grid: false, title: "" },
+      },
+      x: {
+        field: dim2,
+        axis: { title: "", labels: false },
+      },
+      color: {
+        field: dim2,
+        type: "nominal",
+        scale: { scheme: "tableau10" },
+      },
+    },
+    config: {
+      view: { stroke: "transparent" },
+      axis: { domainWidth: 1 },
+    },
+  };
+}
+
 function getSpec(
   data: Record<string, any>[],
   dim1: string,
@@ -43,7 +83,7 @@ function getSpec(
         name: "color",
         type: "ordinal",
         domain: { data: "table", field: dim2 },
-        range: { scheme: "category20" },
+        range: { scheme: "tableau10" },
       },
     ],
 
@@ -136,8 +176,14 @@ function getSpec(
 }
 
 function GroupedBarChart(props: { data: Row[]; measure: string }) {
+  // TODO: figure out which spec to use and make it so there's only one.
   return (
-    <Vega spec={getSpec(props.data, "state_name", "race", props.measure)} />
+    <>
+      <Vega
+        spec={getVegaLiteSpec(props.data, "state_name", "race", props.measure)}
+      />
+      <Vega spec={getSpec(props.data, "state_name", "race", props.measure)} />
+    </>
   );
 }
 
