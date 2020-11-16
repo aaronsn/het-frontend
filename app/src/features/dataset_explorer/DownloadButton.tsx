@@ -20,15 +20,11 @@ function download(filename: string, content: string) {
 async function downloadDataset(datasetStore: DatasetStore, datasetId: string) {
   const dataset = await datasetStore.loadDataset(datasetId);
   if (!dataset) {
+    // TODO remove alert, log error and show error in UI
     alert("Oops, failed to load dataset");
     return;
   }
-  const headers = dataset.metadata.fields.map((field) => field.name);
-  const csvString = [headers]
-    .concat(dataset.getRowsAsArrays())
-    .map((row) => row.join(","))
-    .join("\n");
-  download(dataset.metadata.name + ".csv", csvString);
+  download(dataset.metadata.name + ".csv", dataset.toCsvString());
 }
 
 function DownloadButton(props: { datasetId: string }) {

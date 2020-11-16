@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { Dataset, LoadStatus } from "../utils/DatasetTypes";
 import useDatasetStore from "../utils/useDatasetStore";
@@ -14,7 +15,7 @@ function getJointLoadStatus(statuses: LoadStatus[]) {
 
 function WithDatasets(props: {
   datasetIds: string[];
-  children: (datasets: Dataset[]) => JSX.Element;
+  children: (datasets: Record<string, Dataset>) => JSX.Element;
 }) {
   const datasetStore = useDatasetStore();
   // No need to make sure this only loads once, since the dataset store handles
@@ -30,14 +31,16 @@ function WithDatasets(props: {
   switch (getJointLoadStatus(statuses)) {
     case "loaded":
       const datasets = props.datasetIds.map((id) => datasetStore.datasets[id]);
-      return props.children(datasets);
+      return props.children(
+        Object.fromEntries(datasets.map((d) => [d.metadata.id, d]))
+      );
     case "loading":
       return <p>Loading...</p>;
     default:
       return (
         <div>
-          <p>Oops, something went wrong.</p>;
-          <a onClick={() => window.location.reload()}>Try reloading</a>
+          <p>Oops, something went wrong.</p>
+          <Button onClick={() => window.location.reload()}>reload</Button>
         </div>
       );
   }

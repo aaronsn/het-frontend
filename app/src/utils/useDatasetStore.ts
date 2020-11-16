@@ -58,7 +58,7 @@ async function loadResource<R>(
     // TODO handle re-load periodically so long-lived tabs don't get stale.
     if (!shouldLoadResource(loadStatus)) {
       logger.debugLog("Already loaded or loading " + resourceId);
-      return;
+      return cacheManager.cache.resources[resourceId];
     }
 
     logger.debugLog("Loading " + resourceId);

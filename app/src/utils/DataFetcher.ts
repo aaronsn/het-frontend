@@ -5,7 +5,8 @@
 import { MetadataMap, Row } from "./DatasetTypes";
 import { diabetes } from "./FakeData";
 import FakeMetadataMap from "./FakeMetadataMap";
-import { DataFrame, IDataFrame } from "data-forge";
+import { DataFrame } from "data-forge";
+import { reshapeColsToRows } from "./datasetutils";
 
 const colMap = {
   DP05_0070E: "All Races",
@@ -37,38 +38,15 @@ async function getAcsStatePopulations() {
     })
     .dropSeries(colsToMerge)
     .renameSeries(colMap)
-    .renameSeries({ state: "state_fips_code" })
-    .renameSeries({ NAME: "state_name" });
+    .renameSeries({
+      state: "state_fips_code",
+      NAME: "state_name",
+    });
   const renamedPopCols = ["Other race, Non-Hispanic"].concat(
     Object.values(colMap)
   );
-  return colsToRows(df, renamedPopCols, "population", "race");
+  return reshapeColsToRows(df, renamedPopCols, "population", "race");
 }
-
-function colsToRows(
-  df: IDataFrame,
-  cols: string[],
-  newColName: string,
-  groupedByName: string
-) {
-  return df
-    .selectMany((row) => {
-      return cols.map((col) => {
-        return { ...row, [groupedByName]: col, [newColName]: row[col] };
-      });
-    })
-    .dropSeries(cols);
-}
-
-// const groupFn = (group: any) => {
-//   const obj = group
-//     .transformSeries({ race: (value: any) => 'diabetes_' + value })
-//     .aggregate({}, (acc: any, row: any) => {
-//       acc[row.race] = row.diabetes_count;
-//       return acc;
-//     });
-//   return { state_name: group.first().state_name, ...obj };
-// }
 
 function getDiabetesFrame() {
   return new DataFrame(diabetes)
@@ -84,12 +62,10 @@ function getDiabetesFrame() {
       BRFSS2019_IMPLIED_RACE: "race",
       DIABETES_YES_YESPREGNANT: "diabetes_count",
     });
-  // .groupBy((row: any) => row.state_name)
-  // .select(groupFn)
-  // .inflate();
 }
 
 class DataFetcher {
+  // TODO build in retries, timeout before showing error to user.
   async loadDataset(datasetId: string): Promise<Row[]> {
     // TODO load from data server once it's ready
     switch (datasetId) {
