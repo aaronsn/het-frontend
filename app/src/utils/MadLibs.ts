@@ -45,6 +45,16 @@ const MADLIB_LIST: MadLib[] = [
   {
     phrase: ["Tell me about", STATE_FIPS_MAP],
   },
+  {
+    phrase: [
+      "Compare",
+      { 0: "Diabetes" },
+      " in ",
+      { 0: "Alabama", 1: "California", 2: "Georgia" },
+      " compared to ",
+      { 0: "Alabama", 1: "California", 2: "Georgia" },
+    ],
+  },
 ];
 
 export { MADLIB_LIST };

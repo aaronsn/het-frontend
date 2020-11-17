@@ -7,14 +7,54 @@ import DemoReport from "../features/reports/DemoReport";
 import MenuItem from "@material-ui/core/MenuItem";
 import { MADLIB_LIST, MadLib, PhraseSegment } from "../utils/MadLibs";
 import styles from "./ExploreDataPage.module.scss";
+import CompareStatesForVariableReport from "../features/reports/CompareStatesForVariableReport";
+
+function getPhraseValue(
+  madlib: MadLib,
+  index: number,
+  phraseSelectionIds: number[]
+): string {
+  const segment = madlib.phrase[index];
+  return typeof segment === "string"
+    ? segment
+    : segment[phraseSelectionIds[index]];
+}
+
+function ReportWrapper(props: {
+  madlib: MadLib;
+  madlibIndex: number;
+  phraseSelectionIds: number[];
+}) {
+  switch (props.madlibIndex) {
+    case 0:
+      return (
+        <DemoReport
+          madlib={props.madlib}
+          phraseSelectionIds={props.phraseSelectionIds}
+        />
+      );
+    case 4:
+      return (
+        <CompareStatesForVariableReport
+          state1={getPhraseValue(props.madlib, 3, props.phraseSelectionIds)}
+          state2={getPhraseValue(props.madlib, 5, props.phraseSelectionIds)}
+          variable={getPhraseValue(props.madlib, 1, props.phraseSelectionIds)}
+        />
+      );
+    default:
+      return <p>Report not found</p>;
+  }
+}
 
 function ExploreDataPage() {
+  const [madlib, setMadlib] = useState(MADLIB_LIST[0]);
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [phraseSelectionIds, setPhraseValues] = useState(
     MADLIB_LIST[0].phrase.map(() => 0)
   );
 
   function changeMadLib(index: number) {
+    setMadlib(MADLIB_LIST[index]);
     setPhraseValues(MADLIB_LIST[index].phrase.map(() => 0));
     setPhraseIndex(index);
   }
@@ -46,12 +86,11 @@ function ExploreDataPage() {
         </Carousel>
       </div>
       <div className={styles.ReportContainer}>
-        {phraseIndex === 0 && (
-          <DemoReport
-            madlib={MADLIB_LIST[0]}
-            phraseSelectionIds={phraseSelectionIds}
-          />
-        )}
+        <ReportWrapper
+          madlib={madlib}
+          madlibIndex={phraseIndex}
+          phraseSelectionIds={phraseSelectionIds}
+        />
       </div>
     </React.Fragment>
   );
