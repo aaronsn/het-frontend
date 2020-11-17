@@ -6,6 +6,8 @@ export type PhraseSegment = string | Record<number, string>;
 
 export interface MadLib {
   readonly phrase: PhraseSegment[];
+  // Optional array of default selections for the phrase.
+  readonly defaultSelections?: number[];
 }
 
 const MADLIB_LIST: MadLib[] = [
@@ -22,6 +24,17 @@ const MADLIB_LIST: MadLib[] = [
   },
   {
     phrase: ["Tell me about", { 0: "COPD", 1: "diabetes" }, "in the USA."],
+  },
+  {
+    phrase: [
+      "Compare",
+      { 0: "Diabetes" },
+      " in ",
+      STATE_FIPS_MAP,
+      " compared to ",
+      STATE_FIPS_MAP,
+    ],
+    defaultSelections: [0, 0, 0, 13, 0, 0],
   },
 ];
 

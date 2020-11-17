@@ -8,18 +8,61 @@ import DemoReport from "../features/reports/DemoReport";
 import DemoReport2 from "../features/reports/DemoReport2";
 import { MADLIB_LIST, MadLib, PhraseSegment } from "../utils/MadLibs";
 import styles from "./ExploreDataPage.module.scss";
+import CompareStatesForVariableReport from "../features/reports/CompareStatesForVariableReport";
+
+function getPhraseValue(
+  madlib: MadLib,
+  index: number,
+  phraseSelectionIds: number[]
+): string {
+  const segment = madlib.phrase[index];
+  return typeof segment === "string"
+    ? segment
+    : segment[phraseSelectionIds[index]];
+}
+
+function ReportWrapper(props: {
+  madlib: MadLib;
+  madlibIndex: number;
+  phraseSelectionIds: number[];
+}) {
+  switch (props.madlibIndex) {
+    case 0:
+      return (
+        <DemoReport
+          madlib={props.madlib}
+          phraseSelectionIds={props.phraseSelectionIds}
+        />
+      );
+    case 2:
+      return (
+        <CompareStatesForVariableReport
+          state1={getPhraseValue(props.madlib, 3, props.phraseSelectionIds)}
+          state2={getPhraseValue(props.madlib, 5, props.phraseSelectionIds)}
+          variable={getPhraseValue(props.madlib, 1, props.phraseSelectionIds)}
+        />
+      );
+    default:
+      return <p>Report not found</p>;
+  }
+}
+
+function getDefaultSelections(madlib: MadLib) {
+  return madlib.defaultSelections || madlib.phrase.map(() => 0);
+}
 
 function ExploreDataPage() {
+  const [madlib, setMadlib] = useState(MADLIB_LIST[0]);
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [phraseSelectionIds, setPhraseSelectionIds] = useState(
-    MADLIB_LIST[0].phrase.map(() => 0)
+    getDefaultSelections(MADLIB_LIST[0])
   );
 
-  useEffect(() => {
-    // This shouldn't be index 0, should be phraseIndex - need to fix
-    const resetValues = MADLIB_LIST[0].phrase.map(() => 0);
-    setPhraseSelectionIds([...resetValues]);
-  }, [phraseIndex]);
+  function changeMadLib(index: number) {
+    setMadlib(MADLIB_LIST[index]);
+    setPhraseSelectionIds(getDefaultSelections(MADLIB_LIST[index]));
+    setPhraseIndex(index);
+  }
 
   return (
     <React.Fragment>
@@ -31,7 +74,9 @@ function ExploreDataPage() {
           indicators={false}
           animation="slide"
           navButtonsAlwaysVisible={true}
-          onChange={setPhraseIndex}
+          onChange={(index: number) => {
+            changeMadLib(index);	
+          }}
         >
           {MADLIB_LIST.map((madlib: MadLib, i) => (
             <Paper elevation={3} className={styles.CarouselItem} key={i}>
@@ -55,6 +100,13 @@ function ExploreDataPage() {
         {phraseIndex === 1 && (
           <DemoReport2
             madlib={MADLIB_LIST[1]}
+            phraseSelectionIds={phraseSelectionIds}
+          />
+        )}
+        {phraseIndex === 2 && (
+          <ReportWrapper
+            madlib={madlib}
+            madlibIndex={phraseIndex}
             phraseSelectionIds={phraseSelectionIds}
           />
         )}
