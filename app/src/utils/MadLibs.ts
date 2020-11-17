@@ -50,9 +50,11 @@ const MADLIB_LIST: MadLib[] = [
       "Compare",
       { 0: "Diabetes" },
       " in ",
-      { 0: "Alabama", 1: "California", 2: "Georgia" },
+      STATE_FIPS_MAP,
+      // { 0: "Alabama", 1: "California", 2: "Georgia" },
       " compared to ",
-      { 0: "Alabama", 1: "California", 2: "Georgia" },
+      STATE_FIPS_MAP,
+      // { 0: "Alabama", 1: "California", 2: "Georgia" },
     ],
   },
 ];

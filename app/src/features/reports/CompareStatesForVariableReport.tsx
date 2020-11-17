@@ -5,6 +5,8 @@ import GroupedBarChart from "../charts/GroupedBarChart";
 import { Dataset, Row } from "../../utils/DatasetTypes";
 import StackedBarChart from "../charts/StackedBarChart";
 
+const USA_STRING = "the USA";
+
 interface CompareStatesForVariableProps {
   state1: string;
   state2: string;
@@ -54,7 +56,7 @@ function getDiabetesBarChartData(
     joined
       .concat(
         joined.pivot("race", {
-          state_name: (series) => "United States",
+          state_name: (series) => USA_STRING,
           diabetes_count: (series) => series.sum(),
           population: (series) => series.sum(),
         })
@@ -62,9 +64,7 @@ function getDiabetesBarChartData(
       // After joining, reset index to prevent generated series from applying to
       // the wrong rows.
       .resetIndex()
-      .where((row) =>
-        [state1, state2, "United States"].includes(row.state_name)
-      )
+      .where((row) => [state1, state2, USA_STRING].includes(row.state_name))
       .generateSeries({
         diabetes_per_100k: (row) =>
           Math.round(row.diabetes_count / (row.population / 100000)),
@@ -87,11 +87,11 @@ function getStackedPopulationBreakdownChart(
   const dfWithUs = df
     .concat(
       df.pivot("race", {
-        state_name: (series) => "United States",
+        state_name: (series) => USA_STRING,
         population: (series) => series.sum(),
       })
     )
-    .where((row) => [state1, state2, "United States"].includes(row.state_name));
+    .where((row) => [state1, state2, USA_STRING].includes(row.state_name));
   const dfGroupedByState = dfWithUs
     .groupBy((row) => row.state_name)
     .select((group) => {
