@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import { Paper } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
@@ -75,7 +75,7 @@ function ExploreDataPage() {
           animation="slide"
           navButtonsAlwaysVisible={true}
           onChange={(index: number) => {
-            changeMadLib(index);	
+            changeMadLib(index);
           }}
         >
           {MADLIB_LIST.map((madlib: MadLib, i) => (
