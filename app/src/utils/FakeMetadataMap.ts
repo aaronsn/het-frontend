@@ -1,14 +1,14 @@
-import { MetadataMap } from "./DatasetTypes";
+import { DatasetMetadata, MetadataMap } from "./DatasetTypes";
 
-const FakeMetadataMap: MetadataMap = {
-  population_share: {
-    id: "population_share",
-    name: "Share of population",
+const fakeMetadata: DatasetMetadata[] = [
+  {
+    id: "acs_state_population_by_race",
+    name: "Share of population by state and race",
     data_source_name: "American Community Survey 5-year estimates (2014-2018)",
     data_source_link:
       "https://www.census.gov/data/developers/data-sets/acs-5year.html",
-    geographic_level: "State, County",
-    demographic_granularity: "Race/ethnicity, age, gender",
+    geographic_level: "State",
+    demographic_granularity: "Race/ethnicity",
     update_frequency: "??",
     update_time: "March 2, 2020",
     description:
@@ -16,13 +16,31 @@ const FakeMetadataMap: MetadataMap = {
     fields: [
       {
         data_type: "string",
-        name: "fakefield1",
+        name: "state_name",
         description: "description",
-        origin_dataset: "origin_dataset",
+        origin_dataset: "acs_state_population_by_race",
+      },
+      {
+        data_type: "string",
+        name: "state_fips_code",
+        description: "description",
+        origin_dataset: "acs_state_population_by_race",
+      },
+      {
+        data_type: "string",
+        name: "race",
+        description: "description",
+        origin_dataset: "acs_state_population_by_race",
+      },
+      {
+        data_type: "integer",
+        name: "population",
+        description: "description",
+        origin_dataset: "acs_state_population_by_race",
       },
     ],
   },
-  covid_deaths: {
+  {
     id: "covid_deaths",
     name: "COVID-19 Deaths",
     data_source_name: "CDC Provisional Death Counts for COVID-19",
@@ -43,7 +61,7 @@ const FakeMetadataMap: MetadataMap = {
       },
     ],
   },
-  social_vulernability: {
+  {
     id: "social_vulernability",
     name: "Social Vulnerability Index",
     data_source_name: "CDC's Social Vulernability Index",
@@ -64,13 +82,14 @@ const FakeMetadataMap: MetadataMap = {
       },
     ],
   },
-  diabetes: {
-    id: "diabetes",
-    name: "Diabetes Prevalence",
+  {
+    // TODO figure out whether copd should be a separate dataset or not.
+    id: "brfss_diabetes",
+    name: "Diabetes Prevalence by state and race",
     data_source_name: "CDC's BrFSS",
     data_source_link: "https://gis.cdc.gov/grasp/diabetes/DiabetesAtlas.html#",
-    geographic_level: "State, County",
-    demographic_granularity: "Race/ethnicity, age, gender at county",
+    geographic_level: "State",
+    demographic_granularity: "Race/ethnicity",
     update_frequency: "?",
     update_time: "?",
     description:
@@ -78,12 +97,34 @@ const FakeMetadataMap: MetadataMap = {
     fields: [
       {
         data_type: "string",
-        name: "fakefield1",
+        name: "state_name",
         description: "description",
-        origin_dataset: "origin_dataset",
+        origin_dataset: "brfss_diabetes",
+      },
+      {
+        data_type: "string",
+        name: "race",
+        description: "description",
+        origin_dataset: "brfss_diabetes",
+      },
+      {
+        data_type: "integer",
+        name: "diabetes_count",
+        description: "description",
+        origin_dataset: "brfss_diabetes",
+      },
+      {
+        data_type: "integer",
+        name: "copd_count",
+        description: "description",
+        origin_dataset: "brfss_diabetes",
       },
     ],
   },
-};
+];
+
+const FakeMetadataMap: MetadataMap = Object.fromEntries(
+  fakeMetadata.map((m) => [m.id, m])
+);
 
 export default FakeMetadataMap;
