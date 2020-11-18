@@ -22,9 +22,6 @@ function StateLevelAmericanMap(props: {
   // Initial spec state is set in useEffect when default geo is set
   const [spec, setSpec] = useState({});
 
-  console.log("props.varField", props.varField);
-  console.log("props.filter", props.filter);
-
   const myRef = useRef(document.createElement("div"));
 
   useEffect(() => {

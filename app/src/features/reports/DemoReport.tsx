@@ -96,7 +96,7 @@ function DemoReport(props: { madlib: MadLib; phraseSelectionIds: number[] }) {
       <Grid item xs={12} sm={12} md={6} className={styles.PaddedGrid}>
         <h2>
           {props.madlib.phrase.map((phraseSegment, index) => (
-            <React.Fragment>
+            <React.Fragment key={index}>
               {phraseSegment.constructor === Object ? (
                 <span> {phraseSegment[props.phraseSelectionIds[index]]} </span>
               ) : (

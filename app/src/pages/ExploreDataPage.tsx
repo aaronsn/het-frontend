@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
 import { Paper } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
@@ -11,14 +11,15 @@ import styles from "./ExploreDataPage.module.scss";
 
 function ExploreDataPage() {
   const [phraseIndex, setPhraseIndex] = useState(0);
-  const [phraseSelectionIds, setPhraseValues] = useState(
+  const [phraseSelectionIds, setPhraseSelectionIds] = useState(
     MADLIB_LIST[0].phrase.map(() => 0)
   );
 
-  function changeMadLib(index: number) {
-    setPhraseValues(MADLIB_LIST[index].phrase.map(() => 0));
-    setPhraseIndex(index);
-  }
+  useEffect(() => {
+    // This shouldn't be index 0, should be phraseIndex - need to fix
+    const resetValues = MADLIB_LIST[0].phrase.map(() => 0);
+    setPhraseSelectionIds([...resetValues]);
+  }, [phraseIndex]);
 
   return (
     <React.Fragment>
@@ -30,16 +31,14 @@ function ExploreDataPage() {
           indicators={false}
           animation="slide"
           navButtonsAlwaysVisible={true}
-          onChange={(index: number) => {
-            changeMadLib(index);
-          }}
+          onChange={setPhraseIndex}
         >
           {MADLIB_LIST.map((madlib: MadLib, i) => (
             <Paper elevation={3} className={styles.CarouselItem} key={i}>
               <CarouselMadLib
                 madlib={madlib}
                 phraseSelectionIds={phraseSelectionIds}
-                setPhraseValues={setPhraseValues}
+                setPhraseSelectionIds={setPhraseSelectionIds}
                 key={i}
               />
             </Paper>
@@ -67,7 +66,7 @@ function ExploreDataPage() {
 function CarouselMadLib(props: {
   madlib: MadLib;
   phraseSelectionIds: number[];
-  setPhraseValues: (newArray: number[]) => void;
+  setPhraseSelectionIds: (newArray: number[]) => void;
 }) {
   return (
     <React.Fragment>
@@ -86,16 +85,14 @@ function CarouselMadLib(props: {
                     let phraseIndex: number = Number(event.target.name);
                     let updatedArray: number[] = [...props.phraseSelectionIds];
                     updatedArray[phraseIndex] = Number(event.target.value);
-                    props.setPhraseValues(updatedArray);
+                    props.setPhraseSelectionIds(updatedArray);
                   }}
                 >
-                  {Object.keys(phraseSegment).map(
-                    (value: string, index: number) => (
-                      <MenuItem key={index} value={index}>
-                        {phraseSegment[index]}
-                      </MenuItem>
-                    )
-                  )}
+                  {Object.keys(phraseSegment).map((key: string) => (
+                    <MenuItem key={key} value={Number(key)}>
+                      {phraseSegment[Number(key)]}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             )}
