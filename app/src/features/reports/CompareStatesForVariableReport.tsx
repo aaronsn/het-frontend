@@ -4,6 +4,7 @@ import { LinkWithStickyParams } from "../../utils/urlutils";
 import GroupedBarChart from "../charts/GroupedBarChart";
 import { Dataset, Row } from "../../utils/DatasetTypes";
 import StackedBarChart from "../charts/StackedBarChart";
+import { Button, Grid } from "@material-ui/core";
 
 const USA_STRING = "the USA";
 
@@ -120,7 +121,7 @@ const variableConfigs: Record<string, VariableConfig> = {
       getData: getDiabetesBarChartData,
     },
     stackedPopulationBreakdownChart: {
-      title: "Population breakdown by race",
+      title: "Population breakdown by race/ethnicity",
       measure: "population_pct",
       getData: getStackedPopulationBreakdownChart,
     },
@@ -138,29 +139,37 @@ function CompareStatesForVariableReport(props: CompareStatesForVariableProps) {
       {(datasets) => {
         return (
           <>
-            <p>{groupedBarChart.title}</p>
-            <GroupedBarChart
-              data={groupedBarChart.getData(
-                datasets,
-                props.state1,
-                props.state2
-              )}
-              measure={groupedBarChart.measure}
-            />
-            <p>{stackedPopulationBreakdownChart.title}</p>
-            <StackedBarChart
-              data={stackedPopulationBreakdownChart.getData(
-                datasets,
-                props.state1,
-                props.state2
-              )}
-              measure={stackedPopulationBreakdownChart.measure}
-            />
-            <LinkWithStickyParams
-              to={`/datacatalog?dpf=${Object.keys(datasets).join(",")}`}
-            >
-              View Data Sources
-            </LinkWithStickyParams>
+            <Grid container spacing={1} alignItems="flex-start">
+              <Grid item xs={12} sm={12} md={6}>
+                <strong>{groupedBarChart.title}</strong>
+                <GroupedBarChart
+                  data={groupedBarChart.getData(
+                    datasets,
+                    props.state1,
+                    props.state2
+                  )}
+                  measure={groupedBarChart.measure}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <strong>{stackedPopulationBreakdownChart.title}</strong>
+                <StackedBarChart
+                  data={stackedPopulationBreakdownChart.getData(
+                    datasets,
+                    props.state1,
+                    props.state2
+                  )}
+                  measure={stackedPopulationBreakdownChart.measure}
+                />
+              </Grid>
+            </Grid>
+            <Button>
+              <LinkWithStickyParams
+                to={`/datacatalog?dpf=${Object.keys(datasets).join(",")}`}
+              >
+                View Data Sources
+              </LinkWithStickyParams>
+            </Button>
           </>
         );
       }}

@@ -46,16 +46,20 @@ function ReportWrapper(props: {
   }
 }
 
+function getDefaultSelections(madlib: MadLib) {
+  return madlib.defaultSelections || madlib.phrase.map(() => 0);
+}
+
 function ExploreDataPage() {
   const [madlib, setMadlib] = useState(MADLIB_LIST[0]);
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [phraseSelectionIds, setPhraseValues] = useState(
-    MADLIB_LIST[0].phrase.map(() => 0)
+    getDefaultSelections(MADLIB_LIST[0])
   );
 
   function changeMadLib(index: number) {
     setMadlib(MADLIB_LIST[index]);
-    setPhraseValues(MADLIB_LIST[index].phrase.map(() => 0));
+    setPhraseValues(getDefaultSelections(MADLIB_LIST[index]));
     setPhraseIndex(index);
   }
 

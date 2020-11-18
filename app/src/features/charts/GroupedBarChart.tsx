@@ -18,12 +18,12 @@ function getVegaLiteSpec(
         field: dim1,
         type: "ordinal",
         spacing: 10,
+        title: "",
       },
       y: {
         aggregate: "sum",
         field: measure,
-        title: "population",
-        axis: { grid: false, title: "" },
+        axis: { grid: false, title: "", ticks: false },
       },
       x: {
         field: dim2,
@@ -33,6 +33,7 @@ function getVegaLiteSpec(
         field: dim2,
         type: "nominal",
         scale: { scheme: "tableau10" },
+        legend: { title: "" },
       },
     },
     config: {
@@ -177,12 +178,16 @@ function getSpec(
 
 function GroupedBarChart(props: { data: Row[]; measure: string }) {
   // TODO: figure out which spec to use and make it so there's only one.
+  const vegaLiteSpec = getVegaLiteSpec(
+    props.data,
+    "state_name",
+    "race",
+    props.measure
+  );
   return (
     <>
-      <Vega
-        spec={getVegaLiteSpec(props.data, "state_name", "race", props.measure)}
-      />
-      <Vega spec={getSpec(props.data, "state_name", "race", props.measure)} />
+      <Vega spec={vegaLiteSpec} />
+      {/* <Vega spec={getSpec(props.data, "state_name", "race", props.measure)} /> */}
     </>
   );
 }
