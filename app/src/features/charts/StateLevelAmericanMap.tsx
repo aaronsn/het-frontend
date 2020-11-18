@@ -3,51 +3,102 @@ import { Vega } from "react-vega";
 
 const HEIGHT_WIDTH_RATIO = 0.5;
 const LEGEND_WIDTH = 100;
+const GEO_DATASET = "GEO_DATASET";
+const GEO_ID = "id";
 
-function VegaStateMap(props: { state_fips: number; signalListeners: any }) {
+const VAR_DATASET = "VAR_DATASET";
+const VAR_FIPS = "FIPS";
+
+function StateLevelAmericanMap(props: {
+  dataUrl: string;
+  varField: string;
+  legendTitle: string;
+  filter?: string;
+  signalListeners: any;
+  op: string;
+  countyLevel?: boolean;
+}) {
   const [width, setWidth] = useState<number | undefined>();
   // Initial spec state is set in useEffect when default geo is set
   const [spec, setSpec] = useState({});
 
+  console.log("props.varField", props.varField);
+  console.log("props.filter", props.filter);
+
   const myRef = useRef(document.createElement("div"));
 
   useEffect(() => {
-    let datatransformers: any[] = [
+    // Transform geo dataset by adding varField from VAR_DATASET
+    let geoTransformers: any[] = [
       {
         type: "lookup",
-        from: "unemp",
-        key: "id",
-        fields: ["id"],
-        values: ["rate"],
+        from: VAR_DATASET,
+        key: VAR_FIPS,
+        fields: [GEO_ID],
+        values: [props.varField],
       },
     ];
 
-    if (props.state_fips !== 0) {
-      // Converts county FIPS (dataum.id) into it's corresponding State FIPS
-      // This isn't properly mapping if fips < 10 - it wants preceding 0
-      let stateFipsVar = "floor(datum.id / 1000) == " + props.state_fips;
-      datatransformers.push({
+    let varTransformer: any[] = [];
+    if (props.filter && props.filter !== "All") {
+      varTransformer.push({
         type: "filter",
-        expr: stateFipsVar,
+        expr: "datum.BRFSS2019_IMPLIED_RACE === '" + props.filter + "'",
       });
     }
+
+    varTransformer.push({
+      type: "aggregate",
+      groupby: [VAR_FIPS],
+      fields: [props.varField],
+      ops: [props.op],
+      as: [props.varField],
+    });
+
+    let tooltipDatum =
+      props.op === "mean"
+        ? "format(datum." + props.varField + ", '0.1%')"
+        : "datum." + props.varField;
+    let tooltipValue = 'datum.properties.name + ": " + ' + tooltipDatum;
+
+    let legend: any = {
+      fill: "colorScale",
+      orient: "top-right",
+      title: props.legendTitle,
+      font: "monospace",
+      labelFont: "monospace",
+      offset: 10,
+    };
+
+    if (props.op === "mean") {
+      legend["format"] = "0.1%";
+    }
+
+    var ext = props.dataUrl.substr(props.dataUrl.length - 3);
+    let format =
+      ext === "tsv"
+        ? { type: "tsv", parse: "auto", delimiter: "\t" }
+        : { type: "csv" };
 
     setSpec({
       $schema: "https://vega.github.io/schema/vega/v5.json",
       description:
-        "A choropleth map depicting U.S. unemployment rates by county in 2009.",
+        "A choropleth map depicting U.S. diabetesloyment temp_maxs by county in 2009.",
       data: [
         {
-          name: "unemp",
-          url:
-            "https://vega.github.io/vega-lite/examples/data/unemployment.tsv",
-          format: { type: "tsv", parse: "auto", delimiter: "\t" },
+          name: VAR_DATASET,
+          url: props.dataUrl,
+          format: format,
+          transform: varTransformer,
         },
         {
-          name: "countyData",
+          name: GEO_DATASET,
+          transform: geoTransformers,
           url: "counties-10m.json",
-          format: { type: "topojson", feature: "counties" },
-          transform: datatransformers,
+          format: {
+            type: "topojson",
+            feature: "states",
+          },
         },
         {
           name: "selected",
@@ -61,7 +112,7 @@ function VegaStateMap(props: { state_fips: number; signalListeners: any }) {
         {
           name: "usProjection",
           type: "albersUsa",
-          fit: { signal: "data('countyData')" },
+          fit: { signal: "data('" + GEO_DATASET + "')" },
           size: {
             signal:
               "[" +
@@ -76,30 +127,19 @@ function VegaStateMap(props: { state_fips: number; signalListeners: any }) {
         {
           name: "colorScale",
           type: "quantize",
-          domain: [0, 0.15],
+          domain: { data: GEO_DATASET, field: props.varField },
           range: { scheme: "yellowgreenblue", count: 7 },
         },
       ],
-      legends: [
-        {
-          fill: "colorScale",
-          orient: "top-right",
-          title: "Unemployment",
-          format: "0.1%",
-          font: "monospace",
-          labelFont: "monospace",
-          offset: 10,
-        },
-      ],
+      legends: [legend],
       marks: [
         {
           type: "shape",
-          from: { data: "countyData" },
+          from: { data: GEO_DATASET },
           encode: {
             enter: {
               tooltip: {
-                signal:
-                  "datum.properties.name + \": \" + format(datum.rate, '0.1%')",
+                signal: tooltipValue,
               },
             },
             update: {
@@ -108,7 +148,7 @@ function VegaStateMap(props: { state_fips: number; signalListeners: any }) {
                   test: "indata('selected', 'id', datum.id)",
                   value: "red",
                 },
-                { scale: "colorScale", field: "rate" },
+                { scale: "colorScale", field: props.varField },
               ],
             },
             hover: { fill: { value: "pink" } },
@@ -128,7 +168,14 @@ function VegaStateMap(props: { state_fips: number; signalListeners: any }) {
         },
       ],
     });
-  }, [width, props.state_fips]);
+  }, [
+    width,
+    props.varField,
+    props.legendTitle,
+    props.filter,
+    props.dataUrl,
+    props.op,
+  ]);
 
   // TODO: useLayoutEffect ?
   useEffect(() => {
@@ -168,4 +215,4 @@ function VegaStateMap(props: { state_fips: number; signalListeners: any }) {
   );
 }
 
-export default VegaStateMap;
+export default StateLevelAmericanMap;

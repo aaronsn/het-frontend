@@ -3,8 +3,9 @@ import Carousel from "react-material-ui-carousel";
 import { Paper } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
-import DemoReport from "../features/reports/DemoReport";
 import MenuItem from "@material-ui/core/MenuItem";
+import DemoReport from "../features/reports/DemoReport";
+import DemoReport2 from "../features/reports/DemoReport2";
 import { MADLIB_LIST, MadLib, PhraseSegment } from "../utils/MadLibs";
 import styles from "./ExploreDataPage.module.scss";
 
@@ -49,6 +50,12 @@ function ExploreDataPage() {
         {phraseIndex === 0 && (
           <DemoReport
             madlib={MADLIB_LIST[0]}
+            phraseSelectionIds={phraseSelectionIds}
+          />
+        )}
+        {phraseIndex === 1 && (
+          <DemoReport2
+            madlib={MADLIB_LIST[1]}
             phraseSelectionIds={phraseSelectionIds}
           />
         )}

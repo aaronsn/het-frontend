@@ -14,36 +14,14 @@ const MADLIB_LIST: MadLib[] = [
       "Where are the",
       { 0: "highest", 1: "lowest" },
       "rates of",
-      { 0: "obesity", 1: "diabetes" },
+      { 0: "unemployment" },
       "in",
       STATE_FIPS_MAP,
       "?",
     ],
   },
   {
-    phrase: [
-      "Compare",
-      {
-        0: "the number of covid deaths",
-        1: "the number of covid hospitalizations",
-      },
-      " to ",
-      { 0: "obesity", 1: "diabetes" },
-      " in ",
-      STATE_FIPS_MAP,
-    ],
-  },
-  {
-    phrase: [
-      "Which",
-      { 0: "states", 1: "counties" },
-      " are missing data for ",
-      { 0: "obesity", 1: "diabetes" },
-      "?",
-    ],
-  },
-  {
-    phrase: ["Tell me about", STATE_FIPS_MAP],
+    phrase: ["Tell me about", { 0: "COPD", 1: "diabetes" }, "in the USA."],
   },
 ];
 

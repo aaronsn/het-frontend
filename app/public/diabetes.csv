@@ -1,0 +1,311 @@
+FIPS,BRFSS2019_STATE,BRFSS2019_IMPLIED_RACE,DIABETES_YES_YESPREGNANT,DIABETES_NO_REFUSED,PREDIABETES_YES_YESPREGNANT,PREDIABETES_NO_UNSURE_REFUSED,COPD_YES,COPD_NO_UNKNOWN_REFUSED
+01,Alabama,"American Indian/Alaskan Native, Non-Hispanic",18,87,11,73,20,85
+01,Alabama,"Asian, Non-Hispanic",5,33,3,23,1,37
+01,Alabama,"Black, Non-Hispanic",449,1371,215,1139,152,1668
+01,Alabama,"Hispanic",12,84,7,64,8,88
+01,Alabama,"Other race, Non-Hispanic",26,105,17,80,12,119
+01,Alabama,"White, Non-Hispanic",826,4034,417,3495,584,4277
+02,Alaska,"American Indian/Alaskan Native, Non-Hispanic",23,322,0,0,22,323
+02,Alaska,"Asian, Non-Hispanic",5,43,0,0,0,48
+02,Alaska,"Black, Non-Hispanic",5,47,0,0,2,50
+02,Alaska,"Hispanic",7,66,0,0,4,69
+02,Alaska,"Other race, Non-Hispanic",24,175,0,0,10,189
+02,Alaska,"White, Non-Hispanic",268,1992,0,0,165,2095
+04,Arizona,"American Indian/Alaskan Native, Non-Hispanic",179,452,0,0,30,601
+04,Arizona,"Asian, Non-Hispanic",10,75,0,0,1,84
+04,Arizona,"Black, Non-Hispanic",46,157,0,0,18,185
+04,Arizona,"Hispanic",225,1082,0,0,54,1253
+04,Arizona,"Other race, Non-Hispanic",56,257,0,0,45,268
+04,Arizona,"White, Non-Hispanic",827,5575,0,0,689,5713
+05,Arkansas,"American Indian/Alaskan Native, Non-Hispanic",10,51,0,0,18,43
+05,Arkansas,"Asian, Non-Hispanic",2,22,0,0,1,23
+05,Arkansas,"Black, Non-Hispanic",221,537,0,0,81,677
+05,Arkansas,"Hispanic",22,136,0,0,9,149
+05,Arkansas,"Other race, Non-Hispanic",39,165,0,0,38,166
+05,Arkansas,"White, Non-Hispanic",752,3402,0,0,546,3608
+06,California,"American Indian/Alaskan Native, Non-Hispanic",13,72,0,0,6,79
+06,California,"Asian, Non-Hispanic",77,868,0,0,16,929
+06,California,"Black, Non-Hispanic",93,497,0,0,32,558
+06,California,"Hispanic",638,3412,0,0,136,3914
+06,California,"Other race, Non-Hispanic",61,413,0,0,44,430
+06,California,"White, Non-Hispanic",553,4916,0,0,388,5081
+08,California,"American Indian/Alaskan Native, Non-Hispanic",6,73,0,0,6,73
+08,California,"Asian, Non-Hispanic",9,151,0,0,3,157
+08,California,"Black, Non-Hispanic",33,218,0,0,16,235
+08,California,"Hispanic",199,1225,0,0,37,1387
+08,California,"Other race, Non-Hispanic",26,188,0,0,19,195
+08,California,"White, Non-Hispanic",629,6560,0,0,457,6732
+09,Connecticut,"American Indian/Alaskan Native, Non-Hispanic",8,31,0,0,7,32
+09,Connecticut,"Asian, Non-Hispanic",23,180,0,0,4,199
+09,Connecticut,"Black, Non-Hispanic",125,514,0,0,31,608
+09,Connecticut,"Hispanic",99,623,0,0,24,698
+09,Connecticut,"Other race, Non-Hispanic",48,235,0,0,24,259
+09,Connecticut,"White, Non-Hispanic",858,6419,0,0,530,6747
+10,Delaware,"American Indian/Alaskan Native, Non-Hispanic",10,22,5,17,2,30
+10,Delaware,"Asian, Non-Hispanic",10,60,3,55,2,68
+10,Delaware,"Black, Non-Hispanic",98,395,71,310,49,444
+10,Delaware,"Hispanic",68,378,32,345,26,420
+10,Delaware,"Other race, Non-Hispanic",21,108,16,91,12,117
+10,Delaware,"White, Non-Hispanic",392,2335,313,1946,288,2439
+11,District of Columbia,"American Indian/Alaskan Native, Non-Hispanic",1,17,3,13,1,17
+11,District of Columbia,"Asian, Non-Hispanic",6,60,4,50,2,64
+11,District of Columbia,"Black, Non-Hispanic",293,1018,205,803,115,1196
+11,District of Columbia,"Hispanic",7,140,14,110,6,141
+11,District of Columbia,"Other race, Non-Hispanic",7,89,8,77,11,85
+11,District of Columbia,"White, Non-Hispanic",44,936,86,748,25,955
+12,Florida,"American Indian/Alaskan Native, Non-Hispanic",32,144,20,114,41,135
+12,Florida,"Asian, Non-Hispanic",18,139,10,111,3,154
+12,Florida,"Black, Non-Hispanic",394,1256,178,1024,138,1512
+12,Florida,"Hispanic",285,1636,159,1330,100,1821
+12,Florida,"Other race, Non-Hispanic",117,550,79,435,101,566
+12,Florida,"White, Non-Hispanic",1947,10441,1268,8336,1619,10769
+13,Georgia,"American Indian/Alaskan Native, Non-Hispanic",7,48,6,42,8,47
+13,Georgia,"Asian, Non-Hispanic",11,101,8,75,1,111
+13,Georgia,"Black, Non-Hispanic",406,1229,190,966,130,1505
+13,Georgia,"Hispanic",81,489,33,424,29,541
+13,Georgia,"Other race, Non-Hispanic",46,191,15,160,25,212
+13,Georgia,"White, Non-Hispanic",731,4014,476,3222,518,4227
+66,Guam,"Asian, Non-Hispanic",117,593,96,509,16,694
+66,Guam,"Black, Non-Hispanic",1,27,1,27,0,28
+66,Guam,"Hispanic",21,128,28,101,7,142
+66,Guam,"Other race, Non-Hispanic",250,999,197,818,79,1170
+66,Guam,"White, Non-Hispanic",23,267,23,245,10,280
+15,Hawaii,"American Indian/Alaskan Native, Non-Hispanic",4,23,1,22,3,24
+15,Hawaii,"Asian, Non-Hispanic",353,1961,434,1541,79,2235
+15,Hawaii,"Black, Non-Hispanic",8,63,10,47,3,68
+15,Hawaii,"Hispanic",83,485,81,409,33,535
+15,Hawaii,"Other race, Non-Hispanic",343,1712,330,1404,130,1925
+15,Hawaii,"White, Non-Hispanic",223,2426,341,2045,136,2513
+16,Hawaii,"American Indian/Alaskan Native, Non-Hispanic",8,51,10,38,6,53
+16,Hawaii,"Asian, Non-Hispanic",1,23,4,16,1,23
+16,Hawaii,"Black, Non-Hispanic",5,13,4,7,2,16
+16,Hawaii,"Hispanic",69,252,29,220,11,310
+16,Hawaii,"Other race, Non-Hispanic",20,118,16,99,17,121
+16,Hawaii,"White, Non-Hispanic",676,4238,471,3562,358,4556
+17,Illinois,"American Indian/Alaskan Native, Non-Hispanic",3,20,4,15,4,19
+17,Illinois,"Asian, Non-Hispanic",16,196,20,144,4,208
+17,Illinois,"Black, Non-Hispanic",114,545,87,431,59,600
+17,Illinois,"Hispanic",126,690,91,570,20,796
+17,Illinois,"Other race, Non-Hispanic",9,81,9,63,13,77
+17,Illinois,"White, Non-Hispanic",466,3246,335,2625,269,3443
+18,Indiana,"American Indian/Alaskan Native, Non-Hispanic",15,43,0,0,15,43
+18,Indiana,"Asian, Non-Hispanic",7,65,0,0,2,70
+18,Indiana,"Black, Non-Hispanic",148,457,0,0,53,552
+18,Indiana,"Hispanic",55,329,0,0,13,371
+18,Indiana,"Other race, Non-Hispanic",54,183,0,0,23,214
+18,Indiana,"White, Non-Hispanic",1236,6302,0,0,831,6707
+19,Iowa,"American Indian/Alaskan Native, Non-Hispanic",9,29,0,0,9,29
+19,Iowa,"Asian, Non-Hispanic",6,77,0,0,1,82
+19,Iowa,"Black, Non-Hispanic",34,153,0,0,19,168
+19,Iowa,"Hispanic",48,416,0,0,11,453
+19,Iowa,"Other race, Non-Hispanic",15,98,0,0,9,104
+19,Iowa,"White, Non-Hispanic",1187,7731,0,0,632,8286
+20,Kansas,"American Indian/Alaskan Native, Non-Hispanic",21,100,0,0,15,106
+20,Kansas,"Asian, Non-Hispanic",8,113,0,0,5,116
+20,Kansas,"Black, Non-Hispanic",84,345,0,0,33,396
+20,Kansas,"Hispanic",67,494,0,0,22,539
+20,Kansas,"Other race, Non-Hispanic",30,190,0,0,27,193
+20,Kansas,"White, Non-Hispanic",1397,8519,0,0,748,9168
+21,Kentucky,"American Indian/Alaskan Native, Non-Hispanic",12,48,5,44,17,43
+21,Kentucky,"Asian, Non-Hispanic",1,26,3,21,1,26
+21,Kentucky,"Black, Non-Hispanic",177,494,94,397,99,572
+21,Kentucky,"Hispanic",11,95,10,80,9,97
+21,Kentucky,"Other race, Non-Hispanic",36,121,22,97,39,118
+21,Kentucky,"White, Non-Hispanic",1229,5724,791,4864,865,6088
+22,Louisiana,"American Indian/Alaskan Native, Non-Hispanic",12,59,0,0,11,60
+22,Louisiana,"Asian, Non-Hispanic",3,30,0,0,2,31
+22,Louisiana,"Black, Non-Hispanic",233,941,0,0,96,1078
+22,Louisiana,"Hispanic",20,118,0,0,7,131
+22,Louisiana,"Other race, Non-Hispanic",26,108,0,0,20,114
+22,Louisiana,"White, Non-Hispanic",475,2693,0,0,306,2862
+23,Maine,"American Indian/Alaskan Native, Non-Hispanic",14,51,4,46,17,48
+23,Maine,"Asian, Non-Hispanic",4,27,1,26,1,30
+23,Maine,"Black, Non-Hispanic",8,50,9,40,6,52
+23,Maine,"Hispanic",29,132,18,114,19,142
+23,Maine,"Other race, Non-Hispanic",36,171,30,140,41,166
+23,Maine,"White, Non-Hispanic",1587,9264,1332,7966,1213,9638
+24,Maryland,"American Indian/Alaskan Native, Non-Hispanic",17,82,0,0,23,76
+24,Maryland,"Asian, Non-Hispanic",54,323,0,0,5,372
+24,Maryland,"Black, Non-Hispanic",732,2729,0,0,253,3208
+24,Maryland,"Hispanic",65,661,0,0,19,707
+24,Maryland,"Other race, Non-Hispanic",86,422,0,0,51,457
+24,Maryland,"White, Non-Hispanic",1788,10460,0,0,1071,11177
+25,Massachusetts,"American Indian/Alaskan Native, Non-Hispanic",5,29,0,0,3,31
+25,Massachusetts,"Asian, Non-Hispanic",26,247,0,0,5,268
+25,Massachusetts,"Black, Non-Hispanic",68,341,0,0,16,393
+25,Massachusetts,"Hispanic",96,603,0,0,28,671
+25,Massachusetts,"Other race, Non-Hispanic",27,174,0,0,20,181
+25,Massachusetts,"White, Non-Hispanic",670,5445,0,0,407,5708
+26,Michigan,"American Indian/Alaskan Native, Non-Hispanic",21,64,0,0,14,71
+26,Michigan,"Asian, Non-Hispanic",10,144,0,0,4,150
+26,Michigan,"Black, Non-Hispanic",167,708,0,0,76,799
+26,Michigan,"Hispanic",29,245,0,0,20,254
+26,Michigan,"Other race, Non-Hispanic",33,299,0,0,32,300
+26,Michigan,"White, Non-Hispanic",1222,7576,0,0,875,7923
+27,Minnesota,"American Indian/Alaskan Native, Non-Hispanic",42,129,0,0,17,154
+27,Minnesota,"Asian, Non-Hispanic",20,270,0,0,1,289
+27,Minnesota,"Black, Non-Hispanic",68,451,0,0,25,494
+27,Minnesota,"Hispanic",87,588,0,0,19,656
+27,Minnesota,"Other race, Non-Hispanic",37,274,0,0,20,291
+27,Minnesota,"White, Non-Hispanic",1501,12072,0,0,764,12809
+28,Mississippi,"American Indian/Alaskan Native, Non-Hispanic",14,32,6,24,8,38
+28,Mississippi,"Asian, Non-Hispanic",2,13,0,11,1,14
+28,Mississippi,"Black, Non-Hispanic",500,1466,212,1259,182,1784
+28,Mississippi,"Hispanic",5,38,6,28,6,37
+28,Mississippi,"Other race, Non-Hispanic",11,52,6,41,6,57
+28,Mississippi,"White, Non-Hispanic",508,2485,247,2186,331,2662
+29,Missouri,"American Indian/Alaskan Native, Non-Hispanic",14,60,0,0,15,59
+29,Missouri,"Asian, Non-Hispanic",4,47,0,0,0,51
+29,Missouri,"Black, Non-Hispanic",151,532,0,0,66,617
+29,Missouri,"Hispanic",16,137,0,0,14,139
+29,Missouri,"Other race, Non-Hispanic",26,117,0,0,22,121
+29,Missouri,"White, Non-Hispanic",887,5313,0,0,687,5513
+30,Montana,"American Indian/Alaskan Native, Non-Hispanic",111,384,0,0,57,438
+30,Montana,"Asian, Non-Hispanic",2,32,0,0,0,34
+30,Montana,"Black, Non-Hispanic",4,11,0,0,1,14
+30,Montana,"Hispanic",16,123,0,0,6,133
+30,Montana,"Other race, Non-Hispanic",36,202,0,0,36,202
+30,Montana,"White, Non-Hispanic",555,5019,0,0,407,5167
+31,Nebraska,"American Indian/Alaskan Native, Non-Hispanic",55,118,0,0,19,154
+31,Nebraska,"Asian, Non-Hispanic",8,90,0,0,4,94
+31,Nebraska,"Black, Non-Hispanic",57,258,0,0,32,283
+31,Nebraska,"Hispanic",151,1013,0,0,25,1139
+31,Nebraska,"Other race, Non-Hispanic",39,164,0,0,20,183
+31,Nebraska,"White, Non-Hispanic",1903,12013,0,0,1038,12878
+32,Nevada,"American Indian/Alaskan Native, Non-Hispanic",10,31,6,23,6,35
+32,Nevada,"Asian, Non-Hispanic",6,62,9,43,3,65
+32,Nevada,"Black, Non-Hispanic",19,141,19,106,15,145
+32,Nevada,"Hispanic",67,469,72,378,16,520
+32,Nevada,"Other race, Non-Hispanic",15,121,20,96,14,122
+32,Nevada,"White, Non-Hispanic",206,1632,221,1270,189,1649
+33,New Hampshire,"American Indian/Alaskan Native, Non-Hispanic",7,24,0,0,10,21
+33,New Hampshire,"Asian, Non-Hispanic",4,48,0,0,0,52
+33,New Hampshire,"Black, Non-Hispanic",10,32,0,0,0,42
+33,New Hampshire,"Hispanic",6,55,0,0,4,57
+33,New Hampshire,"Other race, Non-Hispanic",19,100,0,0,14,105
+33,New Hampshire,"White, Non-Hispanic",694,4857,0,0,453,5098
+35,New Mexico,"American Indian/Alaskan Native, Non-Hispanic",114,420,101,315,20,514
+35,New Mexico,"Asian, Non-Hispanic",3,39,5,33,1,41
+35,New Mexico,"Black, Non-Hispanic",14,61,10,48,6,69
+35,New Mexico,"Hispanic",355,1586,268,1303,91,1850
+35,New Mexico,"Other race, Non-Hispanic",14,80,13,65,12,82
+35,New Mexico,"White, Non-Hispanic",388,2901,399,2435,326,2963
+36,New York,"American Indian/Alaskan Native, Non-Hispanic",17,87,17,68,18,86
+36,New York,"Asian, Non-Hispanic",46,434,50,345,9,471
+36,New York,"Black, Non-Hispanic",258,1047,205,829,92,1213
+36,New York,"Hispanic",255,1364,183,1156,81,1538
+36,New York,"Other race, Non-Hispanic",82,467,60,382,45,504
+36,New York,"White, Non-Hispanic",1310,8865,946,7692,966,9209
+37,North Carolina,"American Indian/Alaskan Native, Non-Hispanic",25,85,14,63,19,91
+37,North Carolina,"Asian, Non-Hispanic",7,51,5,28,2,56
+37,North Carolina,"Black, Non-Hispanic",177,683,115,514,67,793
+37,North Carolina,"Hispanic",48,357,33,292,11,394
+37,North Carolina,"Other race, Non-Hispanic",23,81,16,50,12,92
+37,North Carolina,"White, Non-Hispanic",361,2389,244,1724,251,2499
+38,North Dakota,"American Indian/Alaskan Native, Non-Hispanic",58,135,25,107,26,167
+38,North Dakota,"Asian, Non-Hispanic",7,36,2,33,1,42
+38,North Dakota,"Black, Non-Hispanic",4,45,3,40,2,47
+38,North Dakota,"Hispanic",7,69,2,60,4,72
+38,North Dakota,"Other race, Non-Hispanic",9,85,9,73,12,82
+38,North Dakota,"White, Non-Hispanic",684,4395,561,3806,343,4736
+39,Ohio,"American Indian/Alaskan Native, Non-Hispanic",23,71,0,0,17,77
+39,Ohio,"Asian, Non-Hispanic",5,82,0,0,3,84
+39,Ohio,"Black, Non-Hispanic",163,635,0,0,80,718
+39,Ohio,"Hispanic",36,185,0,0,16,205
+39,Ohio,"Other race, Non-Hispanic",51,251,0,0,47,255
+39,Ohio,"White, Non-Hispanic",2133,9901,0,0,1522,10512
+40,Oklahoma,"American Indian/Alaskan Native, Non-Hispanic",101,353,0,0,58,396
+40,Oklahoma,"Asian, Non-Hispanic",5,55,0,0,0,60
+40,Oklahoma,"Black, Non-Hispanic",68,261,0,0,27,302
+40,Oklahoma,"Hispanic",70,336,0,0,19,387
+40,Oklahoma,"Other race, Non-Hispanic",58,304,0,0,49,313
+40,Oklahoma,"White, Non-Hispanic",732,3992,0,0,524,4200
+41,Oregon,"American Indian/Alaskan Native, Non-Hispanic",13,74,16,60,10,77
+41,Oregon,"Asian, Non-Hispanic",8,85,11,68,1,92
+41,Oregon,"Black, Non-Hispanic",9,58,9,44,5,62
+41,Oregon,"Hispanic",63,468,96,353,10,521
+41,Oregon,"Other race, Non-Hispanic",33,201,31,162,29,205
+41,Oregon,"White, Non-Hispanic",577,4523,608,3647,345,4755
+42,Pennsylvania,"American Indian/Alaskan Native, Non-Hispanic",8,23,0,0,4,27
+42,Pennsylvania,"Asian, Non-Hispanic",15,131,0,0,4,142
+42,Pennsylvania,"Black, Non-Hispanic",131,563,0,0,55,639
+42,Pennsylvania,"Hispanic",22,275,0,0,10,287
+42,Pennsylvania,"Other race, Non-Hispanic",16,135,0,0,19,132
+42,Pennsylvania,"White, Non-Hispanic",644,4643,0,0,415,4872
+72,Puerto Rico,"Asian, Non-Hispanic",1,1,0,0,0,2
+72,Puerto Rico,"Black, Non-Hispanic",2,2,0,0,0,4
+72,Puerto Rico,"Hispanic",1166,4820,0,0,295,5691
+72,Puerto Rico,"Other race, Non-Hispanic",2,11,0,0,1,12
+72,Puerto Rico,"White, Non-Hispanic",3,24,0,0,3,24
+44,Rhode Island,"American Indian/Alaskan Native, Non-Hispanic",8,34,0,0,9,33
+44,Rhode Island,"Asian, Non-Hispanic",18,71,0,0,2,87
+44,Rhode Island,"Black, Non-Hispanic",45,186,0,0,18,213
+44,Rhode Island,"Hispanic",73,389,0,0,23,439
+44,Rhode Island,"Other race, Non-Hispanic",33,185,0,0,20,198
+44,Rhode Island,"White, Non-Hispanic",710,4358,0,0,522,4546
+45,South Carolina,"American Indian/Alaskan Native, Non-Hispanic",17,38,0,0,10,45
+45,South Carolina,"Asian, Non-Hispanic",6,35,0,0,3,38
+45,South Carolina,"Black, Non-Hispanic",397,1156,0,0,127,1426
+45,South Carolina,"Hispanic",21,162,0,0,8,175
+45,South Carolina,"Other race, Non-Hispanic",28,205,0,0,30,203
+45,South Carolina,"White, Non-Hispanic",840,4241,0,0,513,4568
+46,South Dakota,"American Indian/Alaskan Native, Non-Hispanic",219,639,126,521,80,778
+46,South Dakota,"Asian, Non-Hispanic",0,13,1,11,0,13
+46,South Dakota,"Black, Non-Hispanic",4,31,4,25,1,34
+46,South Dakota,"Hispanic",19,83,12,70,10,92
+46,South Dakota,"Other race, Non-Hispanic",20,137,25,108,12,145
+46,South Dakota,"White, Non-Hispanic",692,4773,545,4168,371,5094
+47,Tennessee,"American Indian/Alaskan Native, Non-Hispanic",18,65,5,57,21,62
+47,Tennessee,"Asian, Non-Hispanic",6,34,1,24,1,39
+47,Tennessee,"Black, Non-Hispanic",173,554,86,446,73,654
+47,Tennessee,"Hispanic",10,124,11,97,10,124
+47,Tennessee,"Other race, Non-Hispanic",29,129,19,95,25,133
+47,Tennessee,"White, Non-Hispanic",906,4193,478,3500,642,4457
+48,Texas,"American Indian/Alaskan Native, Non-Hispanic",21,87,15,62,14,94
+48,Texas,"Asian, Non-Hispanic",31,238,23,154,5,264
+48,Texas,"Black, Non-Hispanic",223,794,115,589,86,931
+48,Texas,"Hispanic",633,2544,378,2024,146,3031
+48,Texas,"Other race, Non-Hispanic",68,342,43,256,39,371
+48,Texas,"White, Non-Hispanic",1141,6175,736,4802,746,6570
+49,Utah,"American Indian/Alaskan Native, Non-Hispanic",27,98,0,0,10,115
+49,Utah,"Asian, Non-Hispanic",10,105,0,0,2,113
+49,Utah,"Black, Non-Hispanic",7,58,0,0,3,62
+49,Utah,"Hispanic",117,889,0,0,36,970
+49,Utah,"Other race, Non-Hispanic",26,160,0,0,4,182
+49,Utah,"White, Non-Hispanic",1161,9134,0,0,548,9747
+50,Vermont,"American Indian/Alaskan Native, Non-Hispanic",11,37,3,34,13,35
+50,Vermont,"Asian, Non-Hispanic",3,30,3,27,0,33
+50,Vermont,"Black, Non-Hispanic",4,25,3,22,3,26
+50,Vermont,"Hispanic",6,62,6,56,7,61
+50,Vermont,"Other race, Non-Hispanic",28,166,23,143,31,163
+50,Vermont,"White, Non-Hispanic",702,5383,544,4859,473,5612
+51,Virginia,"American Indian/Alaskan Native, Non-Hispanic",9,45,5,37,10,44
+51,Virginia,"Asian, Non-Hispanic",19,190,27,138,6,203
+51,Virginia,"Black, Non-Hispanic",345,1189,188,945,132,1402
+51,Virginia,"Hispanic",62,474,45,392,22,514
+51,Virginia,"Other race, Non-Hispanic",46,247,25,208,27,266
+51,Virginia,"White, Non-Hispanic",1005,6321,799,5153,657,6669
+53,Washington,"American Indian/Alaskan Native, Non-Hispanic",27,120,17,101,8,139
+53,Washington,"Asian, Non-Hispanic",46,419,45,347,8,457
+53,Washington,"Black, Non-Hispanic",43,212,20,173,5,250
+53,Washington,"Hispanic",142,793,106,662,36,899
+53,Washington,"Other race, Non-Hispanic",86,494,53,424,48,532
+53,Washington,"White, Non-Hispanic",1314,9297,1120,7856,783,9828
+54,West Virginia,"American Indian/Alaskan Native, Non-Hispanic",9,25,3,21,13,21
+54,West Virginia,"Asian, Non-Hispanic",2,10,2,8,0,12
+54,West Virginia,"Black, Non-Hispanic",23,73,8,62,9,87
+54,West Virginia,"Hispanic",9,36,4,31,5,40
+54,West Virginia,"Other race, Non-Hispanic",15,86,14,68,17,84
+54,West Virginia,"White, Non-Hispanic",1012,4001,548,3371,705,4308
+55,Wisconsin,"American Indian/Alaskan Native, Non-Hispanic",27,56,10,45,8,75
+55,Wisconsin,"Asian, Non-Hispanic",3,39,3,28,0,42
+55,Wisconsin,"Black, Non-Hispanic",54,177,30,134,22,209
+55,Wisconsin,"Hispanic",17,129,17,104,10,136
+55,Wisconsin,"Other race, Non-Hispanic",11,86,6,75,8,89
+55,Wisconsin,"White, Non-Hispanic",482,3870,491,3237,274,4078
+56,Wyoming,"American Indian/Alaskan Native, Non-Hispanic",9,47,0,0,3,53
+56,Wyoming,"Asian, Non-Hispanic",2,8,0,0,1,9
+56,Wyoming,"Black, Non-Hispanic",2,26,0,0,1,27
+56,Wyoming,"Hispanic",27,172,0,0,14,185
+56,Wyoming,"Other race, Non-Hispanic",10,78,0,0,8,80
+56,Wyoming,"White, Non-Hispanic",521,3728,0,0,391,3858
